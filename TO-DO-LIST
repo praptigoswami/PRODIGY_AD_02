@@ -1,0 +1,67 @@
+import java.util.*
+
+fun main() {
+    val scanner = Scanner(System.`in`)
+    val tasks = mutableListOf<String>()
+
+    while (true) {
+        printMenu()
+        when (getUserChoice(scanner, "Enter your choice: ")) {
+            1 -> addTask(scanner, tasks)
+            2 -> removeTask(scanner, tasks)
+            3 -> displayTasks(tasks)
+            4 -> {
+                println("Exiting the program...")
+                return
+            }
+            else -> println("Invalid choice. Try again.")
+        }
+    }
+}
+
+fun printMenu() {
+    println("\nTo-Do List Menu")
+    println("1. Add a task")
+    println("2. Remove a task")
+    println("3. Display tasks")
+    println("4. Exit")
+}
+
+fun getUserChoice(scanner: Scanner, prompt: String): Int {
+    print(prompt)
+    return scanner.nextInt()
+}
+
+fun addTask(scanner: Scanner, tasks: MutableList<String>) {
+    print("Enter the task: ")
+    val task = scanner.next()
+    tasks.add(task)
+    println("Task added successfully.")
+}
+
+fun removeTask(scanner: Scanner, tasks: MutableList<String>) {
+    displayTasks(tasks)
+    if (tasks.isEmpty()) {
+        println("No tasks to remove.")
+        return
+    }
+    print("Enter the index of the task to remove: ")
+    val index = scanner.nextInt()
+    if (index in 0 until tasks.size) {
+        val removedTask = tasks.removeAt(index)
+        println("Removed task: $removedTask")
+    } else {
+        println("Invalid index.")
+    }
+}
+
+fun displayTasks(tasks: List<String>) {
+    if (tasks.isEmpty()) {
+        println("No tasks found.")
+    } else {
+        println("Tasks:")
+        tasks.forEachIndexed { index, task ->
+            println("$index. $task")
+        }
+    }
+}
